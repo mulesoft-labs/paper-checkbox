@@ -1,22 +1,22 @@
 language: node_js
 node_js: stable
+sudo: required
 before_script:
-- bower install --silent
+- npm install -g polymer-cli
+- polymer install --variants
 addons:
+  firefox: latest
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
   sauce_connect: true
 script:
 - npm run lint
-- polymer test --plugin sauce --job-name "paper-checkbox:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER}
+- xvfb-run polymer test polymer test --plugin local
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test --plugin sauce --job-name
+  "anypoint-paper-checkbox:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER}; fi
 cache:
   directories:
   - node_modules
-branches:
-  only:
-  - stage
-  - develop
-after_success:
-- node tasks/ci.js
-env:
-  global:
-  - secure: diimkGx6oT4V4iEM2lCQ8P6YtLT+eVeuunMXbdJBcNMLUGJUhpvox/0tPrvHrbqnxYa/ql5MlMGwJHfC+ahM+8snGH5O8U3DLhGXXR5m9y8Nb+lixpCsBvsDfBKcL8eRUrFnvLz9VJg59PKKvjYkEIvkW+Nej5Wk9X6UsoTF29JunJxSH/os61TvHxgr7ZrlxDYY0kgcI9Ao60Ew3zHvj3igTSVyQLlMnjzwvsbJuvTKauMUIsPF9GJXElLJCPP6jAZclJupztIjEktjjJlbJ+BG37B7w8zEBMXYjSOXLSebRpx7x6Jo0/d8Uo32GOUWdcr/5WXS/Ec1wi+h67KWa97Hkf5eIP6+65oD6ulRGICRBQulP654TtRKnOrZgt7QWFeTurG8wbz+e50O6aCuwBdPoQQwIpNPNqhAQxHqKoIf+zJttZm+T+kV+xBLwJDrQQArikqnUNgFJikjxrLkG4U1aB4iIE57H9nmcc39U+ZrLHDwVv6WjyRySFuj3kF8VUO1WUD61KebuHSNXRlXk7gA/ClRym1CAy7qYMQKf7C0ZfT4DQIZ8Zt2jIMpP6Z0l6jafZb+ojqg3BziY2AZStmBAocj1IOW8uVNf2VkPQgdCl3OhjO80mmhVCnsPYbQ7HzBNDMlunqzg5wDo24VFmVv1pQLGlraz68g8QqB0jQ=
-  - secure: a+uXTZD90Koo1uV0XbxcLaXtYlTHTm8IYKlIfkqs3B4C1HXS0Wjhk0oWBBtaLLqvKHKUmmiFl/FfBDxfgp+V/tItKyJOVGoAWMD8RbINOwH3mMxuLiMKAjXWFyedN8FHx4tnh3nZWu1Uf1IqbKZZFGEfAjOq9XmJV8W+fiKQAvSXDIK7XIFPPxrvy13Xk7CgFpUfPlo/gQLAv0+cWin4MHu0jUXaNKI0MaEgKBdebbRGiMK2C/5AbViMAH9gVvZh8h/B6MnDktm5PdmbNU5WJivB3A8ZfhFEwabzXx9BdA3w2fo6U0s3PVSFnAdxDZnUCbeQlGVP3bToiftjHnB6kLJHhDhRZxn8flXqA57aIWMdrqRsL9hqAvanjB8zbDlY4HTDKQ2OVOjsWdUAobPrAn3vM5E11BOj2Yy6aVk4W7RSv8IWEUwObsUUj03pPKFlYfWn2i11DEKW81sXLQPqUzCPqgUdm3lNhPCi8er00g8K/d5XYRtgYxnsd7l+jLq2afiMYV0F5o07ZuxshL15wOu1zzLMvGoREEzyXe/BUOEklZI7DUmFIiQGgndZE5xkp1wnCHj7sVIeCLMfZeN+fzzUm+eRA12hEwqeszLPZALPrZt8QDoDyy6BgMqk2y0p9W5pFf9TdE9Tu74i7HnMXd21n0q9FwjLryWjq2aozGw=
