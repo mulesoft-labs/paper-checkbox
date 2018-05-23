@@ -1,12 +1,11 @@
 {
-  "name": "@anypoint-components/paper-checkbox",
+  "name": "paper-checkbox",
   "description": "Anypoint version of paper-checkbox element. This meant to be private.",
-  "version": "2.0.0-preview",
+  "version": "2.0.0",
   "license": "(C) MuleSoft. All rights reserved.",
   "author": "Pawel Psztyc",
   "devDependencies": {
-    "@polymer/gen-typescript-declarations": "^1.1.1",
-    "bower": "^1.8.0"
+    "@polymer/gen-typescript-declarations": "^1.1.1"
   },
   "private": true,
   "main": "paper-checkbox.html",
