@@ -1,67 +1,16 @@
 <!--
 @license
-Copyright 2016 The Advanced REST client authors <arc@mulesoft.com>
-Licensed under the Apache License, Version 2.0 (the "License"); you may not
-use this file except in compliance with the License. You may obtain a copy of
-the License at
-http://www.apache.org/licenses/LICENSE-2.0
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-License for the specific language governing permissions and limitations under
-the License.
+Copyright 2017 Mulesoft.
+
+All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../shadycss/apply-shim.html">
 <link rel="import" href="../iron-checked-element-behavior/iron-checked-element-behavior.html">
 <link rel="import" href="../iron-behaviors/iron-button-state.html">
 <link rel="import" href="../anypoint-styles/typography.html">
 <link rel="import" href="../anypoint-styles/colors.html">
 <link rel="import" href="../anypoint-behaviors/anypoint-hoverable-behavior.html">
-<!--
-** Anypoint version of the component **
-
-This element is to be private and used as a replacemenet to any PolymerElements
-
-
-`<paper-checkbox>` is a button that can be either checked or unchecked.
-User can tap the checkbox to check or uncheck it.  Usually you use checkboxes
-to allow user to select multiple options from a set.
-Avoid using a single checkbox as an option selector and use toggle button intead.
-### Example
-```
-<paper-checkbox>label</paper-checkbox>
-<paper-checkbox checked>label</paper-checkbox>
-```
-### Styling
-`<anypoint-checkbox>` provides the following custom properties and mixins for styling:
-Custom property | Description | Default
-----------------|-------------|----------
-`--paper-checkbox` | Mixin applied to the element | `{}`
-`--paper-checkbox-input-border-bolor` | Border color of the checkbox input square | `--anypoint-color-aluminum4`
-`--paper-checkbox-label-color` | A color of the label. | ` --anypoint-color-steel1`
-`--paper-checkbox-label` | Mixin applied to the label | ``
-`--paper-checkbox-label-checked-color` | Color of checked label | `--anypoint-checkbox-label-color` or `--anypoint-color-steel1`
-`--paper-checkbox-label-checked` | Mixin applie dto checked label | ``
-`--paper-checkbox-unchecked-color` | Color of a label of unchecked checkbox | `--anypoint-checkbox-label-color` or `--anypoint-color-steel1`
-`--paper-checkbox-error-color` | Color of error state | `--anypoint-color-danger`
-`--paper-checkbox-label-spacing` | Spacing between the label and the checkbox | `0`
-
-### Example
-```
-<paper-checkbox></paper-checkbox>
-```
-
-### Styling
-`<paper-checkbox>` provides the following custom properties and mixins for styling:
-
-Custom property | Description | Default
-----------------|-------------|----------
-`--paper-checkbox` | Mixin applied to the element | `{}`
-
-@group Anypoint Elements
-@element paper-checkbox
-@demo demo/index.html
--->
 <dom-module id="paper-checkbox">
   <template strip-whitespace>
     <style>
@@ -69,17 +18,17 @@ Custom property | Description | Default
       display: inline-block;
       white-space: nowrap;
       cursor: pointer;
-      @apply(--anypoint-font-common-base);
+      @apply --anypoint-font-common-base;
       line-height: 0;
       -webkit-tap-highlight-color: transparent;
-      @apply(--paper-checkbox);
+      @apply --paper-checkbox;
     }
 
-     :host([hidden]) {
+    :host([hidden]) {
       display: none !important;
     }
 
-     :host(:focus) {
+    :host(:focus) {
       outline: none;
     }
 
@@ -87,18 +36,18 @@ Custom property | Description | Default
       display: none;
     }
 
-    #checkboxContainer {
+    .checkboxContainer {
       display: inline-block;
       position: relative;
       margin-right: 10px;
       vertical-align: middle;
     }
 
-    #checkbox {
+    .checkbox {
       position: relative;
       box-sizing: border-box;
       pointer-events: none;
-      border: 1px solid var(--paper-checkbox-input-border-bolor, --anypoint-color-aluminum4);
+      border: 1px var(--paper-checkbox-input-border-bolor, var(--anypoint-color-aluminum4)) solid;
       -webkit-transition: box-shadow .3s linear;
       transition: box-shadow .3s linear;
       display: inline-block;
@@ -107,7 +56,7 @@ Custom property | Description | Default
       height: 20px;
     }
 
-    #checkmark {
+    .checkmark {
       -webkit-transition: box-shadow .3s linear;
       transition: box-shadow .3s linear;
       box-sizing: content-box;
@@ -121,89 +70,176 @@ Custom property | Description | Default
       transform: rotate(45deg);
     }
 
-    #checkboxLabel {
+    .checkboxLabel {
       position: relative;
       display: inline-block;
       vertical-align: middle;
       white-space: normal;
       line-height: normal;
       padding-left: var(--paper-checkbox-label-spacing, 0);
-      color: var(--paper-checkbox-label-color, --anypoint-color-steel1);
-      @apply(--paper-checkbox-label);
+      color: var(--paper-checkbox-label-color, var(--anypoint-color-steel1));
+      @apply --paper-checkbox-label;
     }
 
-    :host-context([dir="rtl"]) #checkboxLabel {
+    :host-context([dir="rtl"]) .checkboxLabel {
       padding-right: var(--paper-checkbox-label-spacing, 8px);
       padding-left: 0;
     }
 
-    :host([checked]) #checkbox {
-      background: #00a2df;
-      border: 1px solid #00a2df;
+    :host([checked]) .checkbox {
+      background: var(--anypoint-color-primary);
+      border: 1px var(--anypoint-color-primary) solid;
     }
 
-    :host([checked]) #checkmark {
-      background: #fff;
-      box-shadow: 2px 0 0 #fff, 4px 0 0 #fff, 4px -2px 0 #fff, 4px -4px 0 #fff, 4px -6px 0 #fff;
+    :host([checked]) .checkmark {
+      background: var(--anypoint-color-tertiary);
+      box-shadow: 2px 0 0 var(--anypoint-color-tertiary), 4px 0 0 var(--anypoint-color-tertiary), 4px -2px 0 var(--anypoint-color-tertiary), 4px -4px 0 var(--anypoint-color-tertiary), 4px -6px 0 var(--anypoint-color-tertiary);
     }
 
-     :host([checked]) #checkboxLabel {
-      color: var(--paper-checkbox-label-checked-color, var(--paper-checkbox-label-color, --anypoint-color-steel1));
-      @apply(--paper-checkbox-label-checked);
+    :host([checked]) .checkboxLabel {
+      color: var(--paper-checkbox-label-checked-color, var(--paper-checkbox-label-color, var(--anypoint-color-steel1)));
+      @apply --paper-checkbox-label-checked;
     }
 
-    #checkboxLabel[hidden] {
+    .checkboxLabel[hidden] {
       display: none;
     }
 
-     :host([disabled]) #checkbox {
+    :host([disabled]) .checkbox {
       opacity: 0.5;
-      border-color: var(--paper-checkbox-unchecked-color, var(--paper-checkbox-label-color, --anypoint-color-steel1));
+      border-color: var(--paper-checkbox-unchecked-color, var(--paper-checkbox-label-color, var(--anypoint-color-steel1)));
     }
 
-     :host([disabled][checked]) #checkbox {
-      background-color: var(--paper-checkbox-unchecked-color, var(--paper-checkbox-label-color, --anypoint-color-steel1));
+    :host([disabled][checked]) .checkbox {
+      background-color: var(--paper-checkbox-unchecked-color, var(--paper-checkbox-label-color, var(--anypoint-color-steel1)));
       opacity: 0.5;
     }
 
-     :host([disabled]) #checkboxLabel {
+    :host([disabled]) .checkboxLabel {
       opacity: 0.65;
     }
+
     /* invalid state */
-
-    #checkbox.invalid:not(.checked) {
-      border-color: var(--paper-checkbox-error-color, --anypoint-color-danger);
+    .checkbox.invalid:not(.checked) {
+      border-color: var(--paper-checkbox-error-color, var(--anypoint-color-danger));
     }
+
     /* Hovered */
-
-     :host(:not([checked])[hovered]) #checkbox {
-      box-shadow: 0 0 0 6px rgba(0, 0, 0, .12);
+    :host([hovered]) .checkbox {
+      box-shadow: 0 0 0 0.25em rgba(0,0,0,.12);
     }
 
-     :host(:not([checked])[hovered]) #checkmark {
-      background: #989a9b;
-      box-shadow: 2px 0 0 #989a9b, 4px 0 0 #989a9b, 4px -2px 0 #989a9b, 4px -4px 0 #989a9b, 4px -6px 0 #989a9b;
+    :host(:not([checked])[hovered]) .checkmark {
+      background: var(--anypoint-color-aluminum5);
+      box-shadow: 2px 0 0 var(--anypoint-color-aluminum5), 4px 0 0 var(--anypoint-color-aluminum5), 4px -2px 0 var(--anypoint-color-aluminum5), 4px -4px 0 var(--anypoint-color-aluminum5), 4px -6px 0 var(--anypoint-color-aluminum5);
       display: block;
     }
     </style>
-    <div id="checkboxContainer">
-      <div id="checkbox" class$="[[_computeCheckboxClass(checked, invalid)]]">
-        <div id="checkmark" class$="[[_computeCheckmarkClass(checked)]]"></div>
+    <div class="checkboxContainer">
+      <div class$="checkbox [[_computeCheckboxClass(checked, invalid)]]">
+        <div class$="checkmark [[_computeCheckmarkClass(checked)]]"></div>
       </div>
     </div>
-    <div id="checkboxLabel">
-      <content></content>
-    </div>
+    <div class="checkboxLabel"><slot></slot></div>
   </template>
   <script>
-  Polymer({
-    is: 'paper-checkbox',
-    behaviors: [
-      Polymer.IronButtonState,
-      Polymer.IronControlState,
-      Polymer.IronCheckedElementBehavior,
-      Anypoint.AnypointHoverableBehavior
-    ],
+  /**
+   * ** Anypoint version of the component **
+   *
+   * This element is to be private and used as a replacemenet to any PolymerElements
+   *
+   * `<paper-checkbox>` is a button that can be either checked or unchecked.
+   * User can tap the checkbox to check or uncheck it.  Usually you use checkboxes
+   * to allow user to select multiple options from a set.
+   * Avoid using a single checkbox as an option selector and use toggle button intead.
+   *
+   * ### Example
+   *
+   * ```html
+   * <paper-checkbox>label</paper-checkbox>
+   * <paper-checkbox checked>label</paper-checkbox>
+   * ```
+   *
+   * ### Styling
+   *
+   * `<anypoint-checkbox>` provides the following custom properties and mixins for styling:
+   *
+   * Custom property | Description | Default
+   * ----------------|-------------|----------
+   * `--paper-checkbox` | Mixin applied to the element | `{}`
+   * `--paper-checkbox-input-border-bolor` | Border color of the checkbox input square | `--anypoint-color-aluminum4`
+   * `--paper-checkbox-label-color` | A color of the label. | ` --anypoint-color-steel1`
+   * `--paper-checkbox-label` | Mixin applied to the label | ``
+   * `--paper-checkbox-label-checked-color` | Color of checked label | `--anypoint-checkbox-label-color` or `--anypoint-color-steel1`
+   * `--paper-checkbox-label-checked` | Mixin applie dto checked label | ``
+   * `--paper-checkbox-unchecked-color` | Color of a label of unchecked checkbox | `--anypoint-checkbox-label-color` or `--anypoint-color-steel1`
+   * `--paper-checkbox-error-color` | Color of error state | `--anypoint-color-danger`
+   * `--paper-checkbox-label-spacing` | Spacing between the label and the checkbox | `0`
+   *
+   * @customElement
+   * @polymer
+   * @demo demo/index.html
+   * @appliesMixin Anypoint.HoverableBehavior
+   * @appliesMixin Polymer.IronButtonState
+   * @appliesMixin Polymer.IronControlState
+   * @appliesMixin Polymer.IronCheckedElementBehavior
+   * @memberof AnypointElements
+   */
+  class PaperCheckbox extends Polymer.mixinBehaviors([
+    Polymer.IronButtonState,
+    Polymer.IronControlState,
+    Polymer.IronCheckedElementBehavior
+  ], Anypoint.HoverableBehavior(Polymer.Element)) {
+
+    static get is() { return 'paper-checkbox'; }
+    static get properties() {
+      return {
+        ariaActiveAttribute: {
+          type: String,
+          value: 'aria-checked'
+        }
+      };
+    }
+
+    connectedCallback() {
+      super.connectedCallback();
+      if (!this.hasAttribute('role')) {
+        this.setAttribute('role', 'checkbox');
+      }
+      if (!this.hasAttribute('aria-checked')) {
+        this.setAttribute('aria-checked', 'false');
+      }
+      if (!this.hasAttribute('tabindex')) {
+        this.setAttribute('tabindex', '0');
+      }
+    }
+
+    _computeCheckboxClass(checked, invalid) {
+      var className = '';
+      if (checked) {
+        className += 'checked ';
+      }
+      if (invalid) {
+        className += 'invalid';
+      }
+      return className;
+    }
+
+    _computeCheckmarkClass(checked) {
+      return checked ? '' : 'hidden';
+    }
+
+    /**
+     * Synchronizes the element's `active` and `checked` state.
+     */
+    _buttonStateChanged() {
+      if (this.disabled) {
+        return;
+      }
+      if (this.isAttached) {
+        this.checked = this.active;
+      }
+    }
     /**
      * Fired when the checked state changes due to user interaction.
      *
@@ -214,45 +250,7 @@ Custom property | Description | Default
      *
      * @event iron-change
      */
-    properties: {
-      ariaActiveAttribute: {
-        type: String,
-        value: 'aria-checked'
-      }
-    },
-
-    hostAttributes: {
-      role: 'checkbox',
-      'aria-checked': false,
-      tabindex: 0
-    },
-
-    _computeCheckboxClass: function(checked, invalid) {
-      var className = '';
-      if (checked) {
-        className += 'checked ';
-      }
-      if (invalid) {
-        className += 'invalid';
-      }
-      return className;
-    },
-
-    _computeCheckmarkClass: function(checked) {
-      return checked ? '' : 'hidden';
-    },
-
-    /**
-     * Synchronizes the element's `active` and `checked` state.
-     */
-    _buttonStateChanged: function() {
-      if (this.disabled) {
-        return;
-      }
-      if (this.isAttached) {
-        this.checked = this.active;
-      }
-    }
-  });
+  }
+  window.customElements.define(PaperCheckbox.is, PaperCheckbox);
   </script>
 </dom-module>
